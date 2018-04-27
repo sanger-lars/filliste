@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	
+	<title>Fil-liste</title>
+		
+	<style>
+		.busy-cursor {
+  			cursor: progress;
+		}
+		#filepicker {
+			color: white;
+		}
+		#startfra {
+			width: 50px;
+			color: black;
+
+		}
+		body { 
+			
+			padding: 0;
+			margin: 0;}
+		#nr {
+			color: white;
+			overflow: hidden;
+			padding: 0;
+			margin: 0;
+		}
+		#wrapper {
+			background-color: black;
+			height: 100%;
+			width: 100%;
+			padding: 20px;
+			overflow: hidden;
+		}
+		#der {
+			background-color: red;
+			height: 110%;
+			width: 100%;
+			overflow: hidden;
+		}
+		.control {opacity: 0;}
+		.control:hover  {
+			opacity: 1;
+		}
+		#mediaer {
+			padding-top: 0;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div id="der">
+		<div class="control">
+			<input type="file" onmouseup="lars()" id="filepicker" name="fileList" webkitdirectory />
+			<input type="number" id="startfra" value= "0">
+			<button onmouseup="tilbage()">tilbage</button>
+			<button onmouseup="timer()">play</button>
+			<button onmouseup="pause()">pause</button>
+			<button onmouseup="frem()">frem</button>
+			<div id="nr"></div>
+			<b />
+		</div>
+		<p id="mediaer" align="center"> 
+			<img onmouseup="frem()" id="her" src="" alt="" > 
+		</p>
+
+  	</div>
+	<script src="fillist.js" type="text/javascript"></script>
+	
+</body>
+</html>
