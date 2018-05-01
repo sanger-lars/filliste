@@ -40,6 +40,10 @@
 			width: 100%;
 			overflow: hidden;
 		}
+		#check {
+			display: inline;
+			color: white;
+		}
 		.control {opacity: 0;}
 		.control:hover  {
 			opacity: 1;
@@ -60,6 +64,10 @@
 			<button onmouseup="timer()">play</button>
 			<button onmouseup="pause()">pause</button>
 			<button onmouseup="frem()">frem</button>
+			<div id="check">
+				Random: <input type="checkbox" id="Rand" onclick="chk_random()">
+				Kun gif´s: <input type="checkbox" id="Giff" onclick="chk_gif()">
+			</div>
 			<div id="nr"></div>
 			<b />
 		</div>

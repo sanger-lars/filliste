@@ -26,23 +26,6 @@ if (zzz == "?v") {
 
 let im = document.getElementById("her");
 let nrher = document.getElementById("nr");
-
-function validFileType(file) {
-  if (video) {
-    if(file.type === "video/mp4") {
-      return true;
-    }
-  }
-  else {
-    for(var i = 0; i < fileTypes.length; i++) {
-      if(file.type === fileTypes[i]) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
 let output;
 let files;
 let i = 0;
@@ -52,9 +35,31 @@ let v = document.getElementById("video");
 let xx;
 var f;
 let ratio;
-let tilfaeldig = true;
+let tilfaeldig, kunGiffs;
 let tabel = [];
 // v.style.visibility = "hidden";
+
+function validFileType(file) {
+  if (video) {
+    if(file.type === "video/mp4") {
+      return true;
+    }
+  }
+  else if (kunGiffs == true) {
+  	if(file.type === 'image/gif') {
+        return true;
+    }
+  }
+  else{
+    for(var i = 0; i < fileTypes.length; i++) {
+      if(file.type === fileTypes[i]) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 
 function lav_tabel() {
 	for (var f = 0; f < files.length; f++) {
@@ -107,6 +112,17 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+function chk_random() {
+	var checkBox = document.getElementById("Rand");
+	if (checkBox.checked == true) {tilfaeldig = true;} 
+	else {tilfaeldig = false;}
+}
+
+function chk_gif() {
+	var checkBox = document.getElementById("Giff");
+	if (checkBox.checked == true) {kunGiffs = true;} 
+	else {kunGiffs = false;}
+}
 
 document.getElementById("filepicker").addEventListener("change", function(event) {
   output = document.getElementById("listing");
