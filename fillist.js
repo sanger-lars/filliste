@@ -29,6 +29,7 @@ let nrher = document.getElementById("nr");
 let output;
 let files;
 let i = 0;
+let t = 0;
 let minTimer;
 let timerOn = false;
 let v = document.getElementById("video");
@@ -62,8 +63,11 @@ function validFileType(file) {
 
 
 function lav_tabel() {
+	tabel = [];
 	for (var f = 0; f < files.length; f++) {
-		tabel[f] = f;
+		if (validFileType(files[f])) {
+			tabel.push(f);
+		}
 	}
 }
 
@@ -128,16 +132,9 @@ document.getElementById("filepicker").addEventListener("change", function(event)
   output = document.getElementById("listing");
   
   files = event.target.files;
-  //for (i=0; i<files.length; i++) {
- //   let item = document.createElement("li");
-//    item.innerHTML = files[i].webkitRelativePath;
-//    output.appendChild(item);
-//  };
 
 if (files.length > 0) {
-	if (tilfaeldig) {
-		lav_tabel();
-	}
+	lav_tabel();
   frem();
   document.body.classList.remove('busy-cursor');
 }
@@ -172,44 +169,38 @@ function frem2() {
 
 function frem() {
 	var x = document.getElementById("startfra").value;
-	console.log(x);
 	if (x > 0) {
-		i = x-1;
+		t = x-1;
 		document.getElementById("startfra").value = 0;
 	}
-	
-	do {
-		if (tilfaeldig) {
-			if (tabel.length == 0) {lav_tabel();}
-			var t = Math.floor((Math.random() * (tabel.length-1)));
-			i = tabel[t];
-			tabel.splice(t,1);
-		}
-		else {i++;}
-		
-		console.log(i);
-		if (i == files.length + 1) {i = 1;}
+	if (tilfaeldig) {
+		if (tabel.length == 0) {lav_tabel();}
+		t = Math.floor((Math.random() * (tabel.length-1)));
+		i = tabel[t];
+		tabel.splice(t,1);
 	}
-	while ((validFileType(files[i]) == false));
+	else {
+		t++;
+		i = tabel[t];
+	}
+
+	if (t == tabel.length + 1) {
+		t = 1;
+		i = tabel[t];
+	}
   
   if (video) {
 
     videoRun();
   }
-  else
-  {
-  	if (!(i == files.length)) {
+  else {
+  	if (!(t == tabel.length)) {
   		readImage(files[i]);
-  	}}
-//	im = document.getElementById("her");
-//	var hej = window.URL.createObjectURL(files[i]);
-//	im.src = hej;
-//	console.log("img højder="+im.height);
-//	document.getElementById("nr").innerHTML = i+" "+files[i].webkitRelativePath;
-    if (!video) {
+  	}
     im.onload = function() {
         window.URL.revokeObjectURL(this.src);
-    }} 
+    }
+  } 
 }
 
 function readImage (file) {
@@ -217,7 +208,7 @@ function readImage (file) {
   // Create a new FileReader instance
   // https://developer.mozilla.org/en/docs/Web/API/FileReader
   var reader = new FileReader();
-
+  	
   // Once a file is successfully readed:
   reader.addEventListener("load", function () {
 
@@ -256,7 +247,7 @@ function readImage (file) {
     	}
     }
 
-    document.getElementById("nr").innerHTML = "nr. "+i+"  "+imageInfo;
+    document.getElementById("nr").innerHTML = "nr. "+t+" af "+(tabel.length - 1)+"  "+imageInfo;
     if (useBlob) {
       // Free some memory for optimal performance
       window.URL.revokeObjectURL(image.src);
@@ -285,10 +276,17 @@ function pause() {
 }
 
 function tilbage() {
-	do {
+/*	do {
 		i = i - 1;
 	}
-	while (validFileType(files[i]) == false);
+	while (validFileType(files[i]) == false);*/
+	if (!tilfaeldig) {
+		t = t - 1;
+		if (t == 0) {
+			t = tabel.length - 1;
+		}
+		i = tabel[t];
+	}
 	readImage(files[i]);
 //	im = document.getElementById("her");
 //	im.src = window.URL.createObjectURL(files[i]);
